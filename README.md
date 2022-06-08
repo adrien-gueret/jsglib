@@ -20,7 +20,7 @@ We let all the drawing complexity and headaches to the browser!
 
 ## Example
 
-Not convince yet? Let's check the below demo, done of course with JSGlib:
+Not convince yet? Let's check the below game, done of course with JSGlib:
 
-
-[![Title screen of Jurassic Golf, a game made with JSGLib](https://v6p9d9t4.ssl.hwcdn.net/html/5673470/jurassic-golf/images/title_screen.gif)](https://adrien-gueret.itch.io/jurassic-golf)
+![Title screen of Jurassic Golf, a game made with JSGLib](https://v6p9d9t4.ssl.hwcdn.net/html/5673470/jurassic-golf/images/title_screen.gif)  
+[Jurassic Golf](https://adrien-gueret.itch.io/jurassic-golf) ⛳ 🦖
