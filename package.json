@@ -1,0 +1,23 @@
+{
+    "name": "jsglib",
+    "version": "1.0.0",
+    "description": "Develop videogames with HTML and CSS!",
+    "main": "jsglib.js",
+    "repository": {
+      "type": "git",
+      "url": "git+git@github.com:adrien-gueret/jsglib.git"
+    },
+    "keywords": [
+      "videogame",
+      "custom element",
+      "html",
+      "javascript"
+    ],
+    "author": "Adrien Guéret",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/adrien-gueret/jsglib/issues"
+    },
+    "homepage": "https://github.com/adrien-gueret/jsglib#readme"
+  }
+  
