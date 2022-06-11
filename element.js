@@ -75,13 +75,6 @@ class JSGLibElement extends HTMLElement {
 		this._content = this.shadowRoot.querySelector('slot');
 		this._content._jsglibElement = this;
 		
-		window.setTimeout(() => {
-			this.x = getFromAttributeAsInt(this, 'x', 0);
-			this.y = getFromAttributeAsInt(this, 'y', 0);
-			this.hspeed = getFromAttributeAsInt(this, 'hspeed', 0);
-			this.vspeed = getFromAttributeAsInt(this, 'vspeed', 0);
-		}, 0);
-		
 		this.xmin = getFromAttributeAsInt(this, 'xmin', -Infinity);
 		this.ymin = getFromAttributeAsInt(this, 'ymin', -Infinity);
 		this.xmax = getFromAttributeAsInt(this, 'xmax', Infinity);
@@ -89,11 +82,14 @@ class JSGLibElement extends HTMLElement {
 		this.width = getFromAttributeAsInt(this, 'width', 16);
 		this.height = getFromAttributeAsInt(this, 'height', 16);	
 
+		this.x = getFromAttributeAsInt(this, 'x', 0);
+		this.y = getFromAttributeAsInt(this, 'y', 0);
+		this.hspeed = getFromAttributeAsInt(this, 'hspeed', 0);
+		this.vspeed = getFromAttributeAsInt(this, 'vspeed', 0);
+
 		applyIsAttribute(this);
 		
 		// this.game.intersectionObserver.observe(this._content);
-		
-		dispatchEvent(this, 'jsglib:ready', { bubbles: true });
 	}
 	
 	disconnectedCallback() {
@@ -242,7 +238,7 @@ class JSGLibElement extends HTMLElement {
 	moveX(x, options = {}) {
 		const prevX = this.x;
 		const nextX = getBoundedX(this, x);
-		const deltaX = nextX - prevX;	
+		const deltaX = nextX - prevX;
 		
 		const timingFunction = options.timingFunction || 'linear';
 		const behavior = options.behavior || null;
