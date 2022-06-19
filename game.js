@@ -1,4 +1,5 @@
 import { dispatchEvent, getFromAttributeAsInt, applyIsAttribute } from './utils.js';
+import CollisionObserver from './collisionObserver.js';
 
 const template = document.createElement('template');
 		
@@ -58,6 +59,10 @@ class JSGLibGame extends HTMLElement {
 		this.height = getFromAttributeAsInt(this, 'height', 340);
 		this.zoom = getFromAttributeAsInt(this, 'zoom', 1);
 		
+		this.collisionObserver = new CollisionObserver({
+			root: this,
+			interval: 1000 / this.fps,
+		});
 		/*
 		this.intersectionObserver = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
@@ -97,7 +102,8 @@ class JSGLibGame extends HTMLElement {
 	disconnectedCallback() {
 		window.removeEventListener('resize', this.__resetCachedBoundingClientRect);
 		window.removeEventListener('scroll', this.__resetCachedBoundingClientRect);
-		
+		this.collisionObserver.disconnect();
+
 		// this.intersectionObserver.disconnect();
 	}
 	

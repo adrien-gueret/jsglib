@@ -51,7 +51,7 @@ class JSGLibElement extends HTMLElement {
 		this._cachedBoundingClientRect = null;
 		this.clearCachedBoundingClientRectClock = null;
 		
-		this._observers = {};
+		this._collisionCallbacks = {};
 		
 		this._onEndX = null;
 		this._onEndY = null;
@@ -368,39 +368,52 @@ class JSGLibElement extends HTMLElement {
 		this.y = this.y;
 	}
 	
-	observeCollisions(selector, callback) {
-		// TODO: rewrite that with CollisionObserver
-		return;
-		if (!callback) {
+	observeCollisions(selector, onCollisionStart, onCollisionEnd) {
+		if (!selector) {
+			throw new Error(`[JSGLib] Can't observe collisions of <${this.tagName.toLowerCase()}> without any selectors.`);
+		}
+
+		if (!onCollisionStart) {
 			throw new Error(`[JSGLib] Can't observe collisions of <${this.tagName.toLowerCase()}> on "${selector}" without any callback.`);
 		}
 		
-		this.unobserveCollisions(selector);
-		
-		this._observers[selector] = window.setInterval(() => {
-			for (let elem of this.game.querySelectorAll(selector)) {
-				console.log(elem);
-			}
-		}, 1000/this.game.fps);
+		this.game.collisionObserver.observe(this, selector);
+
+		const callbacks = this._collisionCallbacks[selector] || { start: [], end: [] };
+		callbacks.start.push(onCollisionStart);
+
+		this.addEventListener('jsglib:collisionStart', onCollisionStart);
+	
+		if (onCollisionEnd) {
+			this.addEventListener('jsglib:collisionEnd', onCollisionEnd);
+			callbacks.end.push(onCollisionEnd);
+		}
+
+		this._collisionCallbacks[selector] = callbacks;
 	}
 	
 	unobserveCollisions(selector) {
-		// TODO: rewrite that with CollisionObserver
-		return;
-		if (!this._observers[selector]) {
-			return;
+		if (!selector) {
+			return Object.keys(this._collisionCallbacks).map((observedSelector) => ({
+				selector: observedSelector,
+				hasBeenUnobersved: this.unobserveCollisions(observedSelector),
+			}));
 		}
+
+		const hasBeenUnobserved = this.game.collisionObserver.unobserve(this, selector);
+
+		if (!hasBeenUnobserved) { return false; }
 		
-		window.clearInterval(this._observers[selector]);
-		delete this._observers[selector];
-	}
-	
-	unobserveAllCollisions() {
-		// TODO: rewrite that with CollisionObserver
-		return;
-		Object.keys(this._observers).forEach((observerSelector) => {
-			this.unobserveCollisions(observerSelector);
+		this._collisionCallbacks[selector].start.forEach((callback) => {
+			this.removeEventListener('jsglib:collisionStart', callback);
 		});
+		this._collisionCallbacks[selector].end.forEach((callback) => {
+			this.removeEventListener('jsglib:collisionEnd', callback);
+		});
+
+		delete this._collisionCallbacks[selector];
+
+		return true;
 	}
 }
 
