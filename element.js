@@ -97,7 +97,7 @@ class JSGLibElement extends HTMLElement {
 			window.clearTimeout(this.clearCachedBoundingClientRectClock);
 		}
 		
-		this.game.intersectionObserver.unobserve(this._content);
+		// this.game.intersectionObserver.unobserve(this._content);
 		this.unobserveAllCollisions();
 		dispatchEvent(this, 'jsglib:destroy');
 	}
@@ -369,6 +369,8 @@ class JSGLibElement extends HTMLElement {
 	}
 	
 	observeCollisions(selector, callback) {
+		// TODO: rewrite that with CollisionObserver
+		return;
 		if (!callback) {
 			throw new Error(`[JSGLib] Can't observe collisions of <${this.tagName.toLowerCase()}> on "${selector}" without any callback.`);
 		}
@@ -383,6 +385,8 @@ class JSGLibElement extends HTMLElement {
 	}
 	
 	unobserveCollisions(selector) {
+		// TODO: rewrite that with CollisionObserver
+		return;
 		if (!this._observers[selector]) {
 			return;
 		}
@@ -392,6 +396,8 @@ class JSGLibElement extends HTMLElement {
 	}
 	
 	unobserveAllCollisions() {
+		// TODO: rewrite that with CollisionObserver
+		return;
 		Object.keys(this._observers).forEach((observerSelector) => {
 			this.unobserveCollisions(observerSelector);
 		});

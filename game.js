@@ -98,7 +98,7 @@ class JSGLibGame extends HTMLElement {
 		window.removeEventListener('resize', this.__resetCachedBoundingClientRect);
 		window.removeEventListener('scroll', this.__resetCachedBoundingClientRect);
 		
-		this.intersectionObserver.disconnect();
+		// this.intersectionObserver.disconnect();
 	}
 	
 	getBoundingClientRect() {
