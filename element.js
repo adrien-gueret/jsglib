@@ -82,12 +82,16 @@ class JSGLibElement extends HTMLElement {
 		this.width = getFromAttributeAsInt(this, 'width', 16);
 		this.height = getFromAttributeAsInt(this, 'height', 16);	
 
-		this.x = getFromAttributeAsInt(this, 'x', 0);
-		this.y = getFromAttributeAsInt(this, 'y', 0);
-		this.hspeed = getFromAttributeAsInt(this, 'hspeed', 0);
-		this.vspeed = getFromAttributeAsInt(this, 'vspeed', 0);
+		window.requestAnimationFrame(() => {
+			this.x = getFromAttributeAsInt(this, 'x', 0);
+			this.y = getFromAttributeAsInt(this, 'y', 0);
+			this.hspeed = getFromAttributeAsInt(this, 'hspeed', 0);
+			this.vspeed = getFromAttributeAsInt(this, 'vspeed', 0);
 
-		applyIsAttribute(this);
+			applyIsAttribute(this);
+
+			dispatchEvent(this, 'jsglib:ready');
+		});
 		
 		// this.game.intersectionObserver.observe(this._content);
 	}

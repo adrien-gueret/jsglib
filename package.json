@@ -1,6 +1,6 @@
 {
     "name": "jsglib",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Develop videogames with HTML and CSS!",
     "main": "jsglib.js",
     "repository": {
