@@ -51,7 +51,6 @@ class JSGLibGame extends HTMLElement {
 	}
 	
 	connectedCallback() {
-		this.setAttribute('tabindex', 0);
 		this.setAttribute('data-jsglib-game', 1);
 		
 		this.fps = getFromAttributeAsInt(this, 'fps', 60);
@@ -83,12 +82,6 @@ class JSGLibGame extends HTMLElement {
 		this.addEventListener('mousemove', (e) => {
 			this.mouse.x = e.clientX - this.x;
 			this.mouse.y = e.clientY - this.y;
-		});
-
-		this.addEventListener('keydown', (e) => {
-			if (e.key === ' ' || e.key === 'Enter') {
-				this.click();
-			}
 		});
 		
 		this.__resetCachedBoundingClientRect = () => this.cachedBoundingClientRect = null;
